@@ -49,9 +49,9 @@ module balance (
 
     always_comb begin
         //will this work, is them multiplication an issue??
-        if (currBalance > (cost + 2'b01) * 0.25) begin
+        if (currBalance > (cost + 2'b01) * 0.1) begin
             nextEnoughMoney = 1;
-            nextBalance = currBalance - ((cost + 2'b01) * 0.25);
+            nextBalance = currBalance - ((cost + 2'b01) * 0.1);
         end
         //should enough money stay the same or change it??
         else if (nickel || dime) begin
