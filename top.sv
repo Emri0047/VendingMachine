@@ -20,6 +20,13 @@ module top (
   input  logic txready, rxready
 );
 
+logic [4:0] encoderOut;
+logic [1:0] cost, foodType;
+ecn20to5 encoder (.in(pb[19:0]), .out(encoderOut), .strobe(red));
+vending testVend(.button(encoderOut[3:0]), .cost(cost), .foodtype(foodType));
+assign right[1:0] = cost;
+assign left [1:0] = foodType;
+
 endmodule
 
 module balance (
@@ -49,9 +56,9 @@ module balance (
 
     always_comb begin
         //will this work, is them multiplication an issue??
-        if (currBalance > (cost + 2'b01) * 0.1) begin
+        if (currBalance > (cost + 2'b01) * 0.25) begin
             nextEnoughMoney = 1;
-            nextBalance = currBalance - ((cost + 2'b01) * 0.1);
+            nextBalance = currBalance - ((cost + 2'b01) * 0.25);
         end
         //should enough money stay the same or change it??
         else if (nickel || dime) begin
@@ -101,4 +108,19 @@ module vending (
         cost= 'b00;
     end
     end
+endmodule
+
+module ecn20to5 (
+input logic [19:0] in,
+output logic [4:0] out,
+output logic strobe
+);
+logic [5:0] i;
+assign strobe = |in;
+always_comb begin
+  out = 0;
+  for (i = 0; i < 20; i++)
+    if(in[i[4:0]])
+      out = i[4:0];
+end
 endmodule
