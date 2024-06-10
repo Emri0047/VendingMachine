@@ -25,7 +25,7 @@ logic [1:0] cost, foodType;
 ecn20to5 encoder (.in(pb[19:0]), .out(encoderOut), .strobe(red));
 vending testVend(.button(encoderOut[3:0]), .cost(cost), .foodtype(foodType));
 assign right[1:0] = cost;
-assign left [1:0] = foodType;
+assign left[7:6] = foodType;
 
 endmodule
 

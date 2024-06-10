@@ -1,10 +1,10 @@
 // `timescale 1ms/10ps
 module tbE;
 
-task testVending ()
+// task testVending ()
 
 
-endtask
+// endtask
 
 
 
